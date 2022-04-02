@@ -1,0 +1,150 @@
+------ Group 1 ------
+User078@it.dhbw-ravensburg.de
+User033@it.dhbw-ravensburg.de
+User030@it.dhbw-ravensburg.de
+User097@it.dhbw-ravensburg.de
+
+------ Group 2 ------
+User064@it.dhbw-ravensburg.de
+User015@it.dhbw-ravensburg.de
+User034@it.dhbw-ravensburg.de
+User036@it.dhbw-ravensburg.de
+
+------ Group 3 ------
+User009@it.dhbw-ravensburg.de
+User012@it.dhbw-ravensburg.de
+User029@it.dhbw-ravensburg.de
+User040@it.dhbw-ravensburg.de
+
+------ Group 4 ------
+User072@it.dhbw-ravensburg.de
+User010@it.dhbw-ravensburg.de
+User054@it.dhbw-ravensburg.de
+User090@it.dhbw-ravensburg.de
+
+------ Group 5 ------
+User049@it.dhbw-ravensburg.de
+User006@it.dhbw-ravensburg.de
+User077@it.dhbw-ravensburg.de
+User051@it.dhbw-ravensburg.de
+
+------ Group 6 ------
+User084@it.dhbw-ravensburg.de
+User041@it.dhbw-ravensburg.de
+User018@it.dhbw-ravensburg.de
+User008@it.dhbw-ravensburg.de
+
+------ Group 7 ------
+User037@it.dhbw-ravensburg.de
+User070@it.dhbw-ravensburg.de
+User083@it.dhbw-ravensburg.de
+User099@it.dhbw-ravensburg.de
+
+------ Group 8 ------
+User043@it.dhbw-ravensburg.de
+User062@it.dhbw-ravensburg.de
+User079@it.dhbw-ravensburg.de
+User081@it.dhbw-ravensburg.de
+
+------ Group 9 ------
+User071@it.dhbw-ravensburg.de
+User020@it.dhbw-ravensburg.de
+User055@it.dhbw-ravensburg.de
+User066@it.dhbw-ravensburg.de
+
+------ Group 10 ------
+User021@it.dhbw-ravensburg.de
+User091@it.dhbw-ravensburg.de
+User086@it.dhbw-ravensburg.de
+User013@it.dhbw-ravensburg.de
+
+------ Group 11 ------
+User075@it.dhbw-ravensburg.de
+User061@it.dhbw-ravensburg.de
+User042@it.dhbw-ravensburg.de
+User002@it.dhbw-ravensburg.de
+
+------ Group 12 ------
+User093@it.dhbw-ravensburg.de
+User098@it.dhbw-ravensburg.de
+User100@it.dhbw-ravensburg.de
+User046@it.dhbw-ravensburg.de
+
+------ Group 13 ------
+User076@it.dhbw-ravensburg.de
+User014@it.dhbw-ravensburg.de
+User035@it.dhbw-ravensburg.de
+User089@it.dhbw-ravensburg.de
+
+------ Group 14 ------
+User069@it.dhbw-ravensburg.de
+User085@it.dhbw-ravensburg.de
+User007@it.dhbw-ravensburg.de
+User060@it.dhbw-ravensburg.de
+
+------ Group 15 ------
+User044@it.dhbw-ravensburg.de
+User096@it.dhbw-ravensburg.de
+User057@it.dhbw-ravensburg.de
+User068@it.dhbw-ravensburg.de
+
+------ Group 16 ------
+User038@it.dhbw-ravensburg.de
+User087@it.dhbw-ravensburg.de
+User032@it.dhbw-ravensburg.de
+User073@it.dhbw-ravensburg.de
+
+------ Group 17 ------
+User005@it.dhbw-ravensburg.de
+User031@it.dhbw-ravensburg.de
+User095@it.dhbw-ravensburg.de
+User045@it.dhbw-ravensburg.de
+
+------ Group 18 ------
+User004@it.dhbw-ravensburg.de
+User074@it.dhbw-ravensburg.de
+User052@it.dhbw-ravensburg.de
+User082@it.dhbw-ravensburg.de
+
+------ Group 19 ------
+User067@it.dhbw-ravensburg.de
+User024@it.dhbw-ravensburg.de
+User001@it.dhbw-ravensburg.de
+User065@it.dhbw-ravensburg.de
+
+------ Group 20 ------
+User003@it.dhbw-ravensburg.de
+User047@it.dhbw-ravensburg.de
+User058@it.dhbw-ravensburg.de
+User023@it.dhbw-ravensburg.de
+
+------ Group 21 ------
+User092@it.dhbw-ravensburg.de
+User056@it.dhbw-ravensburg.de
+User050@it.dhbw-ravensburg.de
+User059@it.dhbw-ravensburg.de
+
+------ Group 22 ------
+User025@it.dhbw-ravensburg.de
+User094@it.dhbw-ravensburg.de
+User011@it.dhbw-ravensburg.de
+User027@it.dhbw-ravensburg.de
+
+------ Group 23 ------
+User088@it.dhbw-ravensburg.de
+User017@it.dhbw-ravensburg.de
+User019@it.dhbw-ravensburg.de
+User022@it.dhbw-ravensburg.de
+
+------ Group 24 ------
+User016@it.dhbw-ravensburg.de
+User080@it.dhbw-ravensburg.de
+User053@it.dhbw-ravensburg.de
+User026@it.dhbw-ravensburg.de
+
+------ Group 25 ------
+User048@it.dhbw-ravensburg.de
+User039@it.dhbw-ravensburg.de
+User063@it.dhbw-ravensburg.de
+User028@it.dhbw-ravensburg.de
+
