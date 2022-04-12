@@ -61,7 +61,7 @@ int read_file(char * user_list[]) {
     for (int i=0; i < 128; i++) {
         if (fgets(line, 127, fp) != NULL) {
             len_list ++;
-            user_list[i] = malloc(strlen(line));
+            user_list[i] = malloc(strlen(line)+1);
             strncpy(user_list[i], line,  strlen(line));
         }
     }
