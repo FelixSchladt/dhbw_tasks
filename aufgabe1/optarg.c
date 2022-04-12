@@ -26,12 +26,12 @@ void print_invalid_outfile() {
 }
 
 void print_help() {
-        puts("Usage: aufgabe1 INPUTFILE [OPTION...]\n");
-        puts("Group parser -- sort students into random groups");
-        puts(    "-o    FILE    Provide name of output file");
-        puts(    "-s    SIZE    Group size");
-        puts(    "-q            no output to stdout");
-        puts(    "-h            Show this help message");
+        puts("Usage: aufgabe1 INPUTFILE [OPTION...]\n"\
+        "Group parser -- sort students into random groups"\
+        "o    FILE    Provide name of output file"\
+        "-s    SIZE    Group size"\
+        "-q            no output to stdout"\
+        "-h            Show this help message");
 }
 
 //uses getopt to read cmd line options
