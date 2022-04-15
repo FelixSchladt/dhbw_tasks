@@ -22,6 +22,7 @@ static void checkDir(const char* dir) {
 
 	if (stat(dir, &sb) != 0 
 	    || !S_ISDIR(sb.st_mode)) {
+
 		mkdir(dir, 0777);
 		printf("Create directory: \033[32m%s\033[0m\n", dir);
 
@@ -92,10 +93,10 @@ int main(int argc, char** argv) {
 		printf("Creating \033[32m%i\033[0m files in \033[32m%s\033[0m\n", amount, dir);
 		checkDir(dir);
 		createFiles(dir, amount, delay);
+	    free(dir);
 
 	}
 
-	free(dir);
 	return 0;
 
 }

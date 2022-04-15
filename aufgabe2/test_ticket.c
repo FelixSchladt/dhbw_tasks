@@ -13,7 +13,7 @@ int get_random_hour() {
 }
 
 char * get_mail( char * mail ) {
-    strcpy(mail, "antonia.pawlik@gmail.com");
+    strcpy(mail, "test.test@test.test");
     return mail;
 }
 
@@ -26,15 +26,15 @@ static void init() {
 }
 
 /* Returns a random line (w/o newline) from the file provided */
-char* get_random_mail() {
+/*char* get_random_mail() {
     FILE *f;
     size_t lineno = 0;
     size_t selectlen;
-    char selected[256]; /* Arbitrary, make it whatever size makes sense */
+    char selected[256]; // Arbitrary, make it whatever size makes sense 
     char current[256];
-    selected[0] = '\0'; /* Don't crash if file is empty */
+    selected[0] = '\0'; // Don't crash if file is empty 
 
-    f = fopen("./randommail.txt", "r"); /* Add your own error checking */
+    f = fopen("./randommail.txt", "r"); 
     while (fgets(current, sizeof(current), f)) {
         if (drand48() < 1.0 / ++lineno) {
             strcpy(selected, current);
@@ -46,7 +46,7 @@ char* get_random_mail() {
         selected[selectlen-1] = '\0';
     }
     return strdup(selected);
-}
+}*/
 
 char* get_time( char * time  ) {
     sprintf(time, "%02d:%02d", get_random_hour(), get_random_minute());
@@ -62,11 +62,10 @@ void get_buchung( char * buchung )  {
     sprintf(buchung, "%s\n%s\n", mail, time);
     printf("%s\n", buchung);
 }
-
-
+/*
 int main(int argc, const char ** argv) {
-    //char buchung[256];
-    //get_buchung(buchung);
-    printf("%s\n", get_random_mail());
+    char buchung[256];
+    get_buchung(buchung);
+    //printf("%s\n", get_random_mail());
     return 0;
-}
+}*/
