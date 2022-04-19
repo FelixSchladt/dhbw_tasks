@@ -4,8 +4,28 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <sys/inotify.h>
+#include <stdbool.h>
 
 uint8_t *array;
+
+
+struct Appointment {
+    uint8_t hour;
+    uint8_t minute;
+    char email[256];
+    bool test_result;
+};
+
+// TODO make appoinment typedef
+
+struct Time_slot {
+    bool occupied;
+    struct Appointment ticket;
+};
+//TODO use appointment struct to handle all evenets.
+// use list of time_slot struct to check wether time slot is already occupied
+// when inotify eventhandler is triggerd by event adjust according appointment -> delete or create
+// When CTRL_C signal is triggerd, evaluate all existing appoinments
 
 void CTRL_C(const int signal)
 {
@@ -15,9 +35,15 @@ void CTRL_C(const int signal)
     exit(1);
 }
 
+/*
 void update_table(uint8_t * array) {
-    printf("Table\n");
+    uint8_t minutes = ;
+    for (int hours = 10; hours >= 18; hours++) {
+
+    }
+
 }
+*/
 
 int main() {
 
