@@ -95,7 +95,9 @@ int main(int argc, char** argv) {
 		createFiles(dir, amount, delay);
 	    free(dir);
 
-	}
+    } else {
+        puts("Invalid usage: Please specifiy directory with -p PATH");
+    }
 
 	return 0;
 
