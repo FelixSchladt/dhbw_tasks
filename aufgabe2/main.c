@@ -15,52 +15,17 @@ typedef struct Appointment {
     uint8_t hour;
     uint8_t minute;
     char email[BUFFER];
+    bool occupied;
     bool test_result;
+    char name[BUFFER];
 } appointment;
 
-typedef struct TimeSlot {
-    bool occupied = false;
-    struct Appointment ticket;
-} timeslot;
-
-timeslot timetable[40];
-char email[BUFFER];
-char time[6];
+appointment timetable[40];
 
 //TODO use appointment struct to handle all events.
 // use list of time_slot struct to check weather time slot is already occupied
 // when inotify event handler is triggered by event adjust according appointment -> delete or create
 // When CTRL_C signal is triggered, evaluate all existing appointments
-
-void readFile(char *filename) {
-    FILE *file = fopen("tmp/%s", filename, "r");
-
-    if (file == NULL) {
-        perror("file not found");
-        exit(-1);
-    }
-
-    uint8_t lineCount = 0;
-
-    while (fgets(char line[BUFFER], BUFFER, *file)) {
-        if (lineCount == 0) {
-            email = line;
-        } else {
-            time = line;
-        }
-        lineCount++;
-    }
-
-    fclose(file);
-}
-
-int checkTime(uint8_t hour, uint8_t minute) {
-    if (7 < hour && hour < 18 && minute % 15 == 0) {
-        return true
-    } else {
-        return false
-    }
-}
 
 int getEventIndex(uint8_t hour, uint8_t minute) {
     uint8_t hourIndex = ((hour - 8) * 4);
@@ -68,53 +33,95 @@ int getEventIndex(uint8_t hour, uint8_t minute) {
     return hourIndex + minuteIndex;
 }
 
-void createEvent(uint8_t index, char email[64], uint8_t hour, uint8_t minute) {
-    timetable[index]->ticket.email = email;
-    timetable[index]->ticket.hour = hour;
-    timetable[index]->ticket.minute = minute;
-    timetable[index]->occupied = true;
+int checkTime(uint8_t hour, uint8_t minute) {
+    if (7 < hour && hour < 18 && minute % 15 == 0) {
+        return true;
+    } else {
+        return false;
+    }
 }
 
 void appendBookingCancelled(char *filename) {
-    FILE *file = fopen("tmp/%s", filename, "a");
+    char path[BUFFER];
+    sprintf(path, "tmp/%s", filename);
+    FILE *file = fopen(path, "a");
 
     char *str = {"Ihre Buchung wurde abgelehnt."};
     fprintf(file, "%s", str);
     fclose(file);
 }
 
-void deleteEvent(uint8_t index) {
-    timetable[index]->occupied = false;
+void readFile(char *filename) {
+    char path[50];
+    sprintf(path, "tmp/%s", filename);
+    FILE *file = fopen(path, "r");
+
+    if (file == NULL) {
+        perror("file not found");
+        exit(-1);
+    }
+
+    char email[BUFFER];
+    fgets(email, BUFFER, file);
+    char time[6];
+    fgets(time, 6, file);
+
+    time[2] = '\0';
+    uint8_t hour = atoi(time);
+    uint8_t minute = atoi(time+2);
+    uint8_t index = getEventIndex(hour, minute);
+    
+    strcpy(timetable[index].email, email);
+    timetable[index].hour = hour;
+    timetable[index].minute = minute;
+    timetable[index].occupied = true;
+    strcpy(timetable[index].name, filename);
+
+    fclose(file);
+    
+    if (checkTime(hour, minute)) {
+        uint8_t index = getEventIndex(hour, minute);
+        if (timetable[index].occupied) {
+            return;
+        }
+    }
+    appendBookingCancelled(filename);
+}
+
+void deleteEvent(char * filename) {
+    for (int i = 0; i < 40; i++) {
+        if (strcmp(timetable[i].name, filename)) {
+            timetable[i].occupied = false;
+        }
+    }
 }
 
 void evaluateResults() {
     for (int i = 0; i < 40; i++) {
         bool randbool = rand() % 2;
-        timetable[i]->ticket.test_result = randbool;
+        timetable[i].test_result = randbool;
     }
 }
 
-void collectPositivTestResults() {
-    char result[40][BUFFER] = {"Positive Testergebnisse:"};
-    uint8_t lineCount = 1;
+void collectPositiveTestResults() {
+    FILE *file = fopen("positiveTests.txt", "w");
+    fprintf(file, "Positive Results\n");
+
     for (int i = 0; i < 40; i++) {
-        if (timetable[i].occupied && timetable[i]->ticket.test_result == true) {
-            result[lineCount] = "%s %s:%s", timetable[i].ticket.email, timetable[i].ticket.hour, timetable[i].ticket.minute;
-            lineCount++;
+        if (timetable[i].occupied && timetable[i].test_result) {
+            fprintf(file, "%s %02d:%02d\n\n", timetable[i].email, timetable[i].hour, timetable[i].minute);
         }
     }
 
-    FILE *file = fopen("positiveTests.txt", "w");
-
-    fwrite(result, sizeof(char), sizeof(result), file);
     fclose(file);
 }
 
 void CTRL_C(const int signal) {
     free(array);
-    evaluateResults()
+    evaluateResults();
     // add result to file
     // report all positiv test
+    collectPositiveTestResults();
     puts("");
     puts("Leave monitoring!");
     exit(1);
@@ -160,23 +167,9 @@ int main() {
             if (event->mask & IN_CREATE) {
                 printf("Create len=%d, mask=%x, namelen=%d, name=%s\n", len, event->mask, event->len, event->name);
                 readFile(event->name);
-                char *token = strtok(time, ":");
-                uint8_t hour = token[0]
-                uint8_t minute = token[1];
-                uint8_t index = getEventIndex(hour, minute);
-                if (!checkTime() || timetable[index]->occupied) {
-                    appendBookingCancelled(event->name)
-                } else {
-                    createEvent(index, email, hour, minute);
-                }
             } else if (event->mask & IN_DELETE) {
                 printf("Delete len=%d, mask=%x, namelen=%d, name=%s\n", len, event->mask, event->len, event->name);
-                readFile(event->name);
-                char *token = strtok(time, ":");
-                uint8_t hour = token[0]
-                uint8_t minute = token[1];
-                uint8_t index = getEventIndex(hour, minute);
-                deleteEvent(index);
+                deleteEvent(event->name);
             } else puts("Event unknown");
         }
 
