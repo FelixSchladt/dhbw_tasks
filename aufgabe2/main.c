@@ -18,10 +18,12 @@ struct Appointment {
 
 // TODO make appoinment typedef
 
-struct Time_slot {
+typedef struct TimeSlot {
     bool occupied;
     struct Appointment ticket;
-};
+} timeslot;
+
+timeslot timetable[48];
 //TODO use appointment struct to handle all evenets.
 // use list of time_slot struct to check wether time slot is already occupied
 // when inotify eventhandler is triggerd by event adjust according appointment -> delete or create
