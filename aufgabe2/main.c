@@ -27,6 +27,21 @@ appointment timetable[40];
 // when inotify event handler is triggered by event adjust according appointment -> delete or create
 // When CTRL_C signal is triggered, evaluate all existing appointments
 
+
+void print_time_slots() {
+    FILE * fp = fopen("timeslots.txt", "w");
+    for (int i = 0; i < 40; i++) {
+        if (timetable[i].occupied) {
+            fprintf(fp, "%02d:%02d - %s---\n", i+8-(i%4) -(i/4), (i%4)*15, timetable[i].email);
+//TODO fix times
+        } else {
+            fprintf(fp, "%02d:%02d - free\n---\n", i+8-(i%4)-(i/4), (i%4)*15);
+            //TODO fix times
+        }
+    }
+    fclose(fp);
+}
+
 int getEventIndex(uint8_t hour, uint8_t minute) {
     uint8_t hourIndex = ((hour - 8) * 4);
     uint8_t minuteIndex = minute / 15;
@@ -167,9 +182,11 @@ int main() {
             if (event->mask & IN_CREATE) {
                 printf("Create len=%d, mask=%x, namelen=%d, name=%s\n", len, event->mask, event->len, event->name);
                 readFile(event->name);
+                print_time_slots();
             } else if (event->mask & IN_DELETE) {
                 printf("Delete len=%d, mask=%x, namelen=%d, name=%s\n", len, event->mask, event->len, event->name);
                 deleteEvent(event->name);
+                print_time_slots();
             } else puts("Event unknown");
         }
 
