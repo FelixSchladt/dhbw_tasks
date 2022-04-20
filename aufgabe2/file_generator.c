@@ -37,7 +37,7 @@ static void createFiles(const char* dir, int amount, int delay) {
 	 */
     char ticket[256];
 	for (int i = 0; i < amount; i++) {
-        get_buchung(ticket); 
+        get_buchung(ticket);
 		char* path = malloc(strlen(dir) + 1 + sizeof(amount));
 		sprintf(path, "%s/%i", dir, i);
 
@@ -56,7 +56,7 @@ static void createFiles(const char* dir, int amount, int delay) {
 
 int main(int argc, char** argv) {
 	int c = { 0 };
-	int amount = { 10 };
+	int amount = { 50 };
 	int delay = { 1 };
 	bool hasDir = { false };
 	char* dir;

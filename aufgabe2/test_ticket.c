@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <string.h>
-//#include <unistd.h>
 #include <time.h>
 #include <stdlib.h>
 
@@ -14,7 +13,22 @@ int get_random_hour() {
 }
 
 char *get_mail(char *mail) {
-    strcpy(mail, "test.test@test.test");
+    FILE *file = fopen("random_mail.txt", "r");
+
+    char line[128];
+    uint8_t line_count;
+    uint8_t randnum = rand() % 100;
+
+    while (fgets(line, 128, file)) {
+        strcpy(mail, line);
+        if (line_count == randnum) {
+            break;
+        }
+        line_count++;
+    }
+
+    fclose(file);
+
     return mail;
 }
 
