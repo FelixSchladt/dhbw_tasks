@@ -6,6 +6,7 @@
 #include <sys/inotify.h>
 #include <stdbool.h>
 #include <string.h>
+#include <math.h>
 
 #define BUFFER 128
 
@@ -29,16 +30,18 @@ appointment timetable[40];
 
 
 void print_time_slots() {
-    FILE * fp = fopen("timeslots.txt", "w");
+    FILE *fp = fopen("timeslots.txt", "w");
+    int hour = 0;
     for (int i = 0; i < 40; i++) {
+        if (i % 4 == 0) hour += 4;
         if (timetable[i].occupied) {
-            fprintf(fp, "%02d:%02d - %s---\n", i+8-(i%4) -(i/4), (i%4)*15, timetable[i].email);
-//TODO fix times
-        } else {
-            fprintf(fp, "%02d:%02d - free\n---\n", i+8-(i%4)-(i/4), (i%4)*15);
+            fprintf(fp, "%02d:%02d - %s---\n", i + 8 - (i % 4) - (hour - 4), (i % 4) * 15, timetable[i].email);
             //TODO fix times
+        } else {
+            fprintf(fp, "%02d:%02d - free\n---\n", i + 8 - (i % 4) - (hour - 4), (i % 4) * 15);
         }
     }
+
     fclose(fp);
 }
 
@@ -83,9 +86,9 @@ void readFile(char *filename) {
 
     time[2] = '\0';
     uint8_t hour = atoi(time);
-    uint8_t minute = atoi(time+2);
+    uint8_t minute = atoi(time + 2);
     uint8_t index = getEventIndex(hour, minute);
-    
+
     strcpy(timetable[index].email, email);
     timetable[index].hour = hour;
     timetable[index].minute = minute;
@@ -93,7 +96,7 @@ void readFile(char *filename) {
     strcpy(timetable[index].name, filename);
 
     fclose(file);
-    
+
     if (checkTime(hour, minute)) {
         uint8_t index = getEventIndex(hour, minute);
         if (timetable[index].occupied) {
@@ -103,7 +106,7 @@ void readFile(char *filename) {
     appendBookingCancelled(filename);
 }
 
-void deleteEvent(char * filename) {
+void deleteEvent(char *filename) {
     for (int i = 0; i < 40; i++) {
         if (strcmp(timetable[i].name, filename)) {
             timetable[i].occupied = false;
