@@ -20,8 +20,8 @@ char *get_mail(char *mail) {
     uint8_t randnum = rand() % 100;
 
     while (fgets(line, 128, file)) {
-        strcpy(mail, line);
         if (line_count == randnum) {
+            strcpy(mail, line);
             break;
         }
         line_count++;

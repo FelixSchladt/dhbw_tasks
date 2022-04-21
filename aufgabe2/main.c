@@ -33,12 +33,12 @@ void print_time_slots() {
     FILE *fp = fopen("timeslots.txt", "w");
     int hour = 0;
     for (int i = 0; i < 40; i++) {
-        if (i % 4 == 0) hour += 4;
+        if (i % 4 == 0) hour++;
         if (timetable[i].occupied) {
-            fprintf(fp, "%02d:%02d - %s---\n", i + 8 - (i % 4) - (hour - 4), (i % 4) * 15, timetable[i].email);
+            fprintf(fp, "%02d:%02d - %s---\n", 7 + hour, (i % 4) * 15, timetable[i].email);
             //TODO fix times
         } else {
-            fprintf(fp, "%02d:%02d - free\n---\n", i + 8 - (i % 4) - (hour - 4), (i % 4) * 15);
+            fprintf(fp, "%02d:%02d - free\n---\n", 7 + hour, (i % 4) * 15);
         }
     }
 
