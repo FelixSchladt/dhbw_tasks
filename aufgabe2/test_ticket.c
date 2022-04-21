@@ -2,6 +2,7 @@
 #include <string.h>
 #include <time.h>
 #include <stdlib.h>
+#include <stdint.h>
 
 int get_random_minute() {
     return ((rand() % 4)) * 15;

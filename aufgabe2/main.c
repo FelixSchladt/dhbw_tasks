@@ -89,10 +89,14 @@ void readFile(char *filename) {
     uint8_t minute = atoi(time + 2);
     uint8_t index = getEventIndex(hour, minute);
 
-    strcpy(timetable[index].email, email);
+    puts("Here1");
+    //TODO fix caused here
+    strncpy(timetable[index].email, email, 128);
+    puts("Here2");
     timetable[index].hour = hour;
     timetable[index].minute = minute;
     timetable[index].occupied = true;
+    puts("Here3");
     strcpy(timetable[index].name, filename);
 
     fclose(file);

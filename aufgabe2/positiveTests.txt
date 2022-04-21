@@ -1,10 +1,1 @@
 Positive Results
-test.test@test.test
- 08:00
-
-test.test@test.test
- 09:00
-
-test.test@test.test
- 10:00
-
