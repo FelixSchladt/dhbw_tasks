@@ -8,7 +8,7 @@
 #include <string.h>
 #include <math.h>
 
-#define BUFFER 128
+#define BUFFER 256
 
 uint8_t *array;
 
@@ -83,30 +83,21 @@ void readFile(char *filename) {
     fgets(email, BUFFER, file);
     char time[6];
     fgets(time, 6, file);
-
     time[2] = '\0';
     uint8_t hour = atoi(time);
     uint8_t minute = atoi(time + 2);
     uint8_t index = getEventIndex(hour, minute);
 
-    puts("Here1");
-    //TODO fix caused here
-    strncpy(timetable[index].email, email, 128);
-    puts("Here2");
+    if (!checkTime(hour, minute) || timetable[index].occupied) { return; }
+
+    strcpy(timetable[index].email, email);
     timetable[index].hour = hour;
     timetable[index].minute = minute;
     timetable[index].occupied = true;
-    puts("Here3");
     strcpy(timetable[index].name, filename);
 
     fclose(file);
 
-    if (checkTime(hour, minute)) {
-        uint8_t index = getEventIndex(hour, minute);
-        if (timetable[index].occupied) {
-            return;
-        }
-    }
     appendBookingCancelled(filename);
 }
 
