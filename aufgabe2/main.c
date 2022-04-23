@@ -7,6 +7,7 @@
 #include <stdbool.h>
 #include <string.h>
 #include <math.h>
+#include <time.h>
 
 #define BUFFER 256
 
@@ -52,11 +53,7 @@ int getEventIndex(uint8_t hour, uint8_t minute) {
 }
 
 int checkTime(uint8_t hour, uint8_t minute) {
-    if (7 < hour && hour < 18 && minute % 15 == 0) {
-        return true;
-    } else {
-        return false;
-    }
+    return 7 < hour && hour < 18 && minute % 15 == 0;
 }
 
 void appendBookingCancelled(char *filename) {
@@ -83,12 +80,16 @@ void readFile(char *filename) {
     fgets(email, BUFFER, file);
     char time[6];
     fgets(time, 6, file);
-    time[2] = '\0';
-    uint8_t hour = atoi(time);
-    uint8_t minute = atoi(time + 2);
+    char* hour_token = strtok(time, ":");
+    char* minute_token = strtok(NULL, ":");
+    uint8_t hour = atoi(hour_token);
+    uint8_t minute = atoi(minute_token);
     uint8_t index = getEventIndex(hour, minute);
 
-    if (!checkTime(hour, minute) || timetable[index].occupied) { return; }
+    if (!checkTime(hour, minute) || timetable[index].occupied) {
+   	puts("Dieser Termin ist nicht verfügbar.");
+	return;
+    }
 
     strcpy(timetable[index].email, email);
     timetable[index].hour = hour;
@@ -110,6 +111,7 @@ void deleteEvent(char *filename) {
 }
 
 void evaluateResults() {
+    srand(time(NULL));
     for (int i = 0; i < 40; i++) {
         bool randbool = rand() % 2;
         timetable[i].test_result = randbool;
@@ -118,11 +120,13 @@ void evaluateResults() {
 
 void collectPositiveTestResults() {
     FILE *file = fopen("positiveTests.txt", "w");
-    fprintf(file, "Positive Results\n");
+    fprintf(file, "Positive Results:\n");
+    printf("\nPositive Patienten:\n");
 
     for (int i = 0; i < 40; i++) {
         if (timetable[i].occupied && timetable[i].test_result) {
             fprintf(file, "%s %02d:%02d\n\n", timetable[i].email, timetable[i].hour, timetable[i].minute);
+	    printf("%s %02d:%02d\n\n", timetable[i].email, timetable[i].hour, timetable[i].minute);
         }
     }
 
@@ -137,7 +141,7 @@ void CTRL_C(const int signal) {
     collectPositiveTestResults();
     puts("");
     puts("Leave monitoring!");
-    exit(1);
+    exit(0);
 }
 
 int main() {
@@ -166,23 +170,17 @@ int main() {
     {
         array = malloc(1024);
         int len = 0;
-        /*
-            for(int i = 0; i < 5; ++i)
-                while ((len = read(fd, event, sizeof(struct inotify_event))) < 0) {
-                    puts("Changes");
-                }
-        */
         for (;;) {
             len = read(fd, array, 1024);
 
             struct inotify_event *event = (struct inotify_event *) array;
 
             if (event->mask & IN_CREATE) {
-                printf("Create len=%d, mask=%x, namelen=%d, name=%s\n", len, event->mask, event->len, event->name);
+                printf("Neuer Eintrag in Datei: %s\n", event->name);
                 readFile(event->name);
                 print_time_slots();
             } else if (event->mask & IN_DELETE) {
-                printf("Delete len=%d, mask=%x, namelen=%d, name=%s\n", len, event->mask, event->len, event->name);
+                printf("Eintrag gelöscht: %s\n", event->name);
                 deleteEvent(event->name);
                 print_time_slots();
             } else puts("Event unknown");
