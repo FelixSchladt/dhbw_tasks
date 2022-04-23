@@ -1,10 +1,27 @@
-# C aufgabe 2
+# Antigen Schnelltest 
 
-## TODO
-- create for each time slot a TimeSlot struct inside the timetable array -> for loop
-- Read existing appoinments from tmp directory -> fill details into appointment struct inside TimeSlot struct
-- write function to pretty print timetable array to terminal -> use create_event func
-- handle incoming file events -> clear timetable appointment if delete occurs
-- -> add appoinment if new one is created
-- handle ctrl-c -> fill in randomly results into appointment->res 
-- pretty print all appointments including results
+Please make sure that a *./tmp*-directory exists.
+
+## How to run
+To run the application, run the following command:
+´´´bash
+make run
+´´´
+
+## How to test
+To test the file generation process run the following command:
+´´´bash
+make run-test
+´´´
+
+---
+
+## The test file generator
+Use the command 
+´´´bash
+./test -h
+´´´
+to see a list of parameters.
+
+**IMPORTANT**
+The *-p Path* parameter is required to run the generator.

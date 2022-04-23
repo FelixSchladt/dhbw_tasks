@@ -7,11 +7,11 @@
 
 #include "test_ticket.h"
 
-const char* HELPSTR = {
-"\033[32mUsage\033[0m:\n\n"\
-"-p <path>: REQUIRED, sets the directory the files wll be created in.\n\n"\
-"-a <amount>: the amount of files that will be created.\n\n"\
-"-d <seconds>: the delay between each file bing created.\n\n"
+const char* HELPSTR = { 
+	"\033[32mUsage\033[0m:\n\n"
+	"-p <path>: REQUIRED, sets the directory the files wll be created in.\n\n"
+	"-a <amount>: the amount of files that will be created.\n\n"
+	"-d <seconds>: the delay between each file bing created.\n\n"
 };
 
 static void checkDir(const char* dir) {
