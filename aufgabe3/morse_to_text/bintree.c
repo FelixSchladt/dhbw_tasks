@@ -2,11 +2,11 @@
 #include <stdlib.h>
 #include <stdint.h>
 
-enum morse { DOT, LINE };
+enum morse { EMPTY, DOT, LINE };
 
 struct node {
-	uint8_t data;
-    char charakter;
+	int data;
+    char character;
 	struct node* dot;
 	struct node* line;
 };
@@ -16,23 +16,32 @@ struct node* newNode(int data, char character)
 	struct node* node = (struct node*)malloc(sizeof(struct node));
 
 	node->data = data;
+    node->character = character;
 	node->dot = NULL;
 	node->line = NULL;
 	return (node);
 }
 
-char find_char(struct node Node, uint8_t * symbol) {
-   printf("int sym: %d\n");
-   puts(NULL);
+
+char find_char(struct node Node, char * morse_code) {
+    //printf("CHAR: %c NODE_DATA:%i\n", *morse_code, Node.character);
+    if (*morse_code == '\0') {
+        //puts("NULL");
+        return Node.character;
+    } else if (*morse_code == '.')  {
+        //puts("LINE");
+        morse_code++;
+        return find_char(*Node.dot, morse_code);
+    } else {
+        //puts("LINE");
+        morse_code++;
+        return find_char(*Node.line, morse_code);
+    }
 }
 
-char * get_string_from_morse(struct node Node, char * morse) {
-   find_char() 
-}
-
-int main()
+struct node * get_tree()
 {
-	struct node* root = newNode(NULL, NULL);
+	struct node* root = newNode(EMPTY, EMPTY);
 
 	root->dot = newNode(DOT, 'E');
 	root->line = newNode(LINE, 'T');
@@ -62,10 +71,10 @@ int main()
     root->dot->dot->dot->line = newNode(LINE, 'V');
 
 	root->dot->dot->line->dot = newNode(DOT, 'F');
-	root->dot->dot->line->line = newNode(LINE, NULL); //Ü
+	root->dot->dot->line->line = newNode(LINE, EMPTY); //Ü
 
 	root->dot->line->dot->dot = newNode(DOT, 'L');
-	root->dot->line->dot->line = newNode(LINE, NULL); //Ä
+	root->dot->line->dot->line = newNode(LINE, EMPTY); //Ä
 
 	root->dot->line->line->dot = newNode(DOT, 'P');
 	root->dot->line->line->line = newNode(LINE, 'J');
@@ -79,8 +88,8 @@ int main()
 	root->line->line->dot->dot = newNode(DOT, 'Z');
 	root->line->line->dot->line = newNode(LINE, 'Q');
 
-	root->line->line->line->dot = newNode(DOT, NULL);
-	root->line->line->line->line = newNode(LINE, NULL); //CH
+	root->line->line->line->dot = newNode(DOT, '/');
+	root->line->line->line->line = newNode(LINE, EMPTY); //CH
 
 
     root->dot->dot->dot->dot->dot = newNode(DOT, '5');
@@ -131,7 +140,15 @@ int main()
 	root->line->line->line->line->dot = newNode(DOT, '9');
 	root->line->line->line->line->line = newNode(LINE, '0'); 
 
-
-	return 0;
+	return root;
 }
 
+char morse_to_text(char * morse_code) {
+    return find_char( *get_tree(), morse_code );
+}
+
+/*
+int main() {
+    char * morse_code = ".";
+    printf("CHAR: %c\n", morse_to_text(morse_code ));
+}*/
