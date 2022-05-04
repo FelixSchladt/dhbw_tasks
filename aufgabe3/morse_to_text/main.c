@@ -54,6 +54,6 @@ char * read_file(char * filename) {
 
 int main( int argc, char ** argv ) {
     //printf("Char: %c\n", morse_to_text("."));
-    char * text = read_file("morseCode.txt");
+    char * text = read_file(argv[1]);
     printf("TEXT: %s\n", text);
 }
