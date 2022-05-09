@@ -22,6 +22,7 @@ void text_morse(char ** morse_arr) {
     strcpy(morse_arr[9+i], "----."); //9
 
 
+    for(; i < 90; i  = i + 32) {
     strcpy(morse_arr[17+i], ".-"); //A
     strcpy(morse_arr[18+i], "-..."); //B
     strcpy(morse_arr[19+i], "-.-."); //c
@@ -37,8 +38,6 @@ void text_morse(char ** morse_arr) {
     strcpy(morse_arr[29+i], "--"); //m
     strcpy(morse_arr[30+i], "-."); //n
     strcpy(morse_arr[31+i], "---"); //o
-    strcpy(morse_arr[32+i], ".--."); //p
-    strcpy(morse_arr[33+i], "--.-"); //q
     strcpy(morse_arr[34+i], ".-."); //r
     strcpy(morse_arr[35+i], "..."); //s
     strcpy(morse_arr[36+i], "-"); //t
@@ -48,7 +47,7 @@ void text_morse(char ** morse_arr) {
     strcpy(morse_arr[40+i], "-..-"); //x
     strcpy(morse_arr[41+i], "-.--"); //y
     strcpy(morse_arr[42+i], "--.."); //z
-    
+    }
 
 }
 
@@ -62,10 +61,11 @@ void text_to_morse(char * dest, char * input) {
     //char morse_arr[128];
     char ** morse_arr = malloc(sizeof(char *) * 50);
     text_morse(morse_arr);
-    char buf [8];
+    char buf[8];
     char character; 
 
-
+    // there is a bug where somehow up to three random characteers appear in front of the string
+    // I dont knwo why or how
     int counter = 0;
     while ((character = input[counter]) != '\0') {
         strcpy(buf, char_to_morse(morse_arr, character));
@@ -74,7 +74,7 @@ void text_to_morse(char * dest, char * input) {
         //printf("Morsceode from char %c: %s\n", character, char_to_morse(morse_arr, character));
         counter++;
     }
-    puts(dest);
+    //puts(dest);
 }
 
 void read_file(char * filename) {
@@ -100,7 +100,8 @@ void read_file(char * filename) {
 
 int main() {
     char dest[1024];
-    text_to_morse(dest, "TEST");
+    text_to_morse(dest, "Jan Schaible");
 
-    read_file("test.txt");
+    printf("%s", dest);
+    // read_file("test.txt");
 }
