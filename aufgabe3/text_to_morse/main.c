@@ -6,7 +6,7 @@ void text_morse(char ** morse_arr) {
     //char * morse_arr[128];
     for (int i = 0; i < 128; i++) {
         morse_arr[i] = (char*)malloc(8 * 8);
-        strcpy(morse_arr[i], "");
+        strcpy(morse_arr[i], " ");
     }
 
     int i = 48;
@@ -59,14 +59,13 @@ char * char_to_morse(char ** morse_arr,  char input) {
 
 void text_to_morse(char * dest, char * input) {
     //char morse_arr[128];
-    char ** morse_arr = malloc(sizeof(char *) * 50);
+    char ** morse_arr = malloc(sizeof(char *) * 64);
     text_morse(morse_arr);
     char buf[8];
     char character; 
-
-    // there is a bug where somehow up to three random characteers appear in front of the string
-    // I dont knwo why or how
+    memset(dest, '\0', sizeof(&dest));
     int counter = 0;
+
     while ((character = input[counter]) != '\0') {
         strcpy(buf, char_to_morse(morse_arr, character));
         strcat(buf, " ");
@@ -74,7 +73,6 @@ void text_to_morse(char * dest, char * input) {
         //printf("Morsceode from char %c: %s\n", character, char_to_morse(morse_arr, character));
         counter++;
     }
-    //puts(dest);
 }
 
 void read_file(char * filename) {
@@ -102,6 +100,6 @@ int main() {
     char dest[1024];
     text_to_morse(dest, "Jan Schaible");
 
-    printf("%s", dest);
+    printf("%s\n", dest);
     // read_file("test.txt");
 }
