@@ -6,8 +6,6 @@
 
 
 typedef struct arguments {
-    //char output_path[128];
-    unsigned short group_size;
     bool quiet;
     bool output_to_file;
     FILE * file_pointer;
