@@ -57,7 +57,7 @@ char * char_to_morse(char ** morse_arr,  char input) {
     return morse_arr[input];
 }
 
-void text_to_morse(char * dest, char * input) {
+void text_to_morse(char * dest, char * input) { //This code seems to segfault if multiple runs are made
     //char morse_arr[128];
     char ** morse_arr = malloc(sizeof(char *) * 64);
     text_morse(morse_arr);
@@ -68,27 +68,30 @@ void text_to_morse(char * dest, char * input) {
 
     while ((character = input[counter]) != '\0') {
         strcpy(buf, char_to_morse(morse_arr, character));
-        strcat(buf, " ");
-        strcat(dest, buf);
+        //strcat(buf, " ");
+        //strcat(dest, buf);
+        sprintf(dest, "%s %s", dest, buf);
         //printf("Morsceode from char %c: %s\n", character, char_to_morse(morse_arr, character));
         counter++;
     }
 }
 
-void read_file(char * filename) {
-    FILE * fp = fopen(filename, "r");
-    char buf[1024];
+void read_file(FILE * fp, char * buf) {
+    //FILE * fp = fopen(filename, "r");
+    //char buf[1024];
     char * line = NULL;
     size_t len = 0;
     size_t read;
+    char buffer[128];
 
     if (fp == NULL)
         exit(EXIT_FAILURE);
 
     while ((read = getline(&line, &len, fp)) != -1) {
+        printf(" ");
         printf("Retrieved line of length %zu:\n", read);
-        //text_to_morse(buf, line);
-        printf("%s", buf);
+        //text_to_morse(buffer, line); //Segfault in text to morse
+        printf("%s ", line);
     }
 
     fclose(fp);
@@ -98,8 +101,13 @@ void read_file(char * filename) {
 
 int main() {
     char dest[1024];
-    text_to_morse(dest, "Jan Schaible");
+    //text_to_morse(dest, "Jan Schaible");
 
-    printf("%s\n", dest);
-    // read_file("test.txt");
+    //puts(" ");
+    //printf("%s\n", dest);
+    FILE * fp = fopen("test.txt", "r");
+    read_file(fp, dest);
+
+    //printf("%s\n", dest);
+
 }

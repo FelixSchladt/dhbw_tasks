@@ -28,7 +28,7 @@ void print_invalid_outfile() {
 void print_help() {
         puts("Usage: aufgabe1 INPUTFILE [OPTION...]\n"\
         "Group parser -- sort students into random groups"\
-        "o    FILE    Provide name of output file"\
+        "-o    FILE    Provide name of output file"\
         "-s    SIZE    Group size"\
         "-q            no output to stdout"\
         "-h            Show this help message");
@@ -46,12 +46,12 @@ int arg_parser(int argc, char **argv, Arguments * args) {
 	strcpy(args -> output_path, DEFAULT_OUTPUT_PATH);
     args->quiet = false;
 
-    if ( access(argv[1], F_OK) == 0 ) {
+    if (!access(argv[1], F_OK)) {
         strncpy(args -> input_path, argv[1], 50);
         strcpy(argv[1], argv[0]);
         argc--;
         argv++;
-    } else if (strcmp(argv[1], "-h") == 0) {
+    } else if (!strcmp(argv[1], "-h")) {
        print_help();
        return 0;
     } else {
