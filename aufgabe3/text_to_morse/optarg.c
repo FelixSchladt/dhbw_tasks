@@ -20,24 +20,22 @@ void print_invalid_file() {
 
 void print_help() {
         puts("Usage: text_to_morse INPUTFILE [OPTION...]\n"\
-        "text_to_morse -- convert text into morse code"\
-        "-o    FILE    Provide name of output file"\
+        "text_to_morse -- convert text into morse code\n"\
+        "-o    FILE    Provide name of output file\n"\
         "-h            Show this help message");
 }
 
-//uses getopt to read cmd line options
 int arg_parser(int argc, char **argv, Arguments * args) {
     bool piped_content = !isatty(fileno(stdin));
-    if (argc < 2 || piped_content) {
+    if (argc < 2 && !piped_content) {
         print_missing_input_file();
-        return -1;
+        exit(-1);
     }
 
     int option = 0;
-	strcpy(args -> output_path, DEFAULT_OUTPUT_PATH);
+    bool output_to_file = false;
     
     if ( access(argv[1], F_OK ) == 0 ) {
-        //strncpy(args -> input_path, argv[1], 50);
         args->file_pointer = fopen(argv[1], "r");
         strcpy(argv[1], argv[0]);
         argc--;
@@ -46,27 +44,34 @@ int arg_parser(int argc, char **argv, Arguments * args) {
          args->file_pointer = stdin;
     } else if ( strcmp(argv[1], "-h" ) == 0) {
         print_help();
-        return 0;
+        exit(0);
     } else {
         print_invalid_file();
-        return -1;
+        exit(-1);
     }
 
-    while ((option = getopt(argc, argv, "o:O:hQ")) != -1) {
+    while ((option = getopt(argc, argv, "o:O:h:q")) != -1) {
 		switch(option) {
 			case 'o':
             case 'O':
-				strcpy(args -> output_path, optarg);
+                args->output_file = fopen(optarg, "w");
+                output_to_file = true;
+                break;
+            case 'q':
+                args->quiet = true;
                 break;
 			case 'h':
                 print_help();
-                return 0;
+                exit(0);
 			case '?':	
 			default:
                 printf("Try 'group_parser -h' for more information.\n");
-				return -1;
+				exit(-1);
 		}
 	}
+    if (!output_to_file) {
+        args->output_file = fopen("/dev/null", "w");
+    }
     return 0;
 }
 

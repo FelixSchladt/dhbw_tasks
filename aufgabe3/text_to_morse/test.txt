@@ -1,4 +1,4 @@
 TEST
-zwei drei vier fünf
+zwei drei vier funf
 zeile 3
 dies ist die vierte Zeile

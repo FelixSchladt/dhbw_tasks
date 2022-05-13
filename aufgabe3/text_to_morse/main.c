@@ -1,9 +1,28 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdbool.h>
+#include <stdarg.h>
+
+#include "optarg.h"
+
+void std_fprintf(FILE *stream, bool quiet, const char *format, ...) {
+    va_list args;
+
+    //prints to file
+    va_start(args, format);
+    vfprintf(stream, format, args);
+    va_end(args);
+
+    //if boolean is not set print to stdout
+    if (!quiet) {
+        va_start(args, format);
+        vprintf(format, args);
+        va_end(args);
+    }
+}
 
 void text_morse(char ** morse_arr) {
-    //char * morse_arr[128];
     for (int i = 0; i < 128; i++) {
         morse_arr[i] = (char*)malloc(8 * 8);
         strcpy(morse_arr[i], " ");
@@ -51,14 +70,11 @@ void text_morse(char ** morse_arr) {
 
 }
 
-//am besten Char-code - offset damit der erste index 0 ist
-
 char * char_to_morse(char ** morse_arr,  char input) {
     return morse_arr[input];
 }
 
-void text_to_morse(char * dest, char * input) { //This code seems to segfault if multiple runs are made
-    //char morse_arr[128];
+void text_to_morse(char * dest, char * input) {
     char ** morse_arr = malloc(sizeof(char *) * 64);
     text_morse(morse_arr);
     char buf[8];
@@ -68,46 +84,29 @@ void text_to_morse(char * dest, char * input) { //This code seems to segfault if
 
     while ((character = input[counter]) != '\0') {
         strcpy(buf, char_to_morse(morse_arr, character));
-        //strcat(buf, " ");
-        //strcat(dest, buf);
         sprintf(dest, "%s %s", dest, buf);
-        //printf("Morsceode from char %c: %s\n", character, char_to_morse(morse_arr, character));
         counter++;
     }
 }
 
-void read_file(FILE * fp, char * buf) {
-    //FILE * fp = fopen(filename, "r");
-    //char buf[1024];
+void read_file(Arguments * args) {
     char * line = NULL;
     size_t len = 0;
     size_t read;
-    char buffer[128];
 
-    if (fp == NULL)
-        exit(EXIT_FAILURE);
-
-    while ((read = getline(&line, &len, fp)) != -1) {
-        printf(" ");
-        printf("Retrieved line of length %zu:\n", read);
-        //text_to_morse(buffer, line); //Segfault in text to morse
-        printf("%s ", line);
+    if (args->file_pointer == NULL) { exit(EXIT_FAILURE); }
+        
+    while ((read = getline(&line, &len, args->file_pointer)) != -1) {
+        char dest[128];
+        text_to_morse(dest, line);
+        std_fprintf( args->output_file, args->quiet, "%s\n", dest );
     }
-
-    fclose(fp);
-    if (line)
-        free(line);
+    
+    if (line) { free(line); }
 }
 
-int main() {
-    char dest[1024];
-    //text_to_morse(dest, "Jan Schaible");
-
-    //puts(" ");
-    //printf("%s\n", dest);
-    FILE * fp = fopen("test.txt", "r");
-    read_file(fp, dest);
-
-    //printf("%s\n", dest);
-
+int main(int argc, char ** argv) {
+    Arguments args; 
+    if (arg_parser(argc, argv, &args) != 0 ) { exit(-1); }
+    read_file(&args);
 }
