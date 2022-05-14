@@ -37,7 +37,7 @@ int arg_parser(int argc, char **argv, Arguments * args) {
     
     if ( access(argv[1], F_OK ) == 0 ) {
         args->file_pointer = fopen(argv[1], "r");
-        strcpy(argv[1], argv[0]);
+        strncpy(argv[1], argv[0], strlen(argv[1]));
         argc--;
         argv++;
     } else if (piped_content) { //give stdin as file replacement
