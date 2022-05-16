@@ -5,83 +5,69 @@
 #include <string.h>
 #include <getopt.h>
 
-#ifndef OPTARG_H
-#define OPTARG_H
 #include "optarg.h"
-#endif
 
 void print_missing_input_file() {
-        printf("group_parser: missing input file\n");
-        printf("Try 'group_parser -h' for more information.\n");
+    printf("group_parser: missing input file\n");
+    printf("Try 'group_parser -h' for more information.\n");
 }
 
 void print_invalid_file() {
-        printf("group_parser: input file not found\n");
-        printf("Try 'group_parser -h' for more information.\n");
-}
-
-void print_invalid_outfile() {
-        printf("group_parser: output file not found\n");
-        printf("Try 'group_parser -h' for more information.\n");
+    printf("morse2text: input file not found\n");
+    printf("Try 'group_parser -h' for more information.\n");
 }
 
 void print_help() {
-        puts("Usage: aufgabe1 INPUTFILE [OPTION...]\n"\
-        "Group parser -- sort students into random groups"\
-        "-o    FILE    Provide name of output file"\
-        "-s    SIZE    Group size"\
-        "-q            no output to stdout"\
-        "-h            Show this help message");
+    puts("Usage: morse2text [INPUTFILE] [OPTION...]\n\n"\
+    "morse2text -- translate morse code to readable text\n\n"\
+    "-t    TEXT    morse code is read from provided string\n"\
+    "-m    r/i     Choose the translation method: recursiv [r] / iterative [i]\n"\
+    "-h            Show this help message");
 }
 
 //uses getopt to read cmd line options
-int arg_parser(int argc, char **argv, Arguments * args) {
+int arg_parser(int argc, char **argv, m2targs * args) {
     if (argc < 2) {
         print_missing_input_file();
         return -1;
     }
 
     int option = 0;
-    args->group_size = 4;
-	strcpy(args -> output_path, DEFAULT_OUTPUT_PATH);
-    args->quiet = false;
+    strcpy(args -> filepath, DEFAULT_OUTPUT_PATH);
 
     if (!access(argv[1], F_OK)) {
-        strncpy(args -> input_path, argv[1], 50);
+        strncpy(args -> filepath, argv[1], 50);
         strcpy(argv[1], argv[0]);
+	args->use_file = true;
         argc--;
         argv++;
-    } else if (!strcmp(argv[1], "-h")) {
-       print_help();
-       return 0;
-    } else {
+    } else if (strcmp(argv[1], "-h") != 0
+	       && strcmp(argv[1], "-t") != 0) {
         print_invalid_file();
-        return -1;
+	return -1;
     }
 
-    while ((option = getopt(argc, argv, "s:S:o:O:hqQ")) != -1) {
-		switch(option) {
-			case 's':
-            case 'S':
-				args -> group_size = atoi(optarg);
-				break;
-			case 'o':
-            case 'O':
-				strcpy(args -> output_path, optarg);
-				break;
-            case 'q':
-            case 'Q':
-                args -> quiet = true;
-                break;
-			case 'h':
+    while ((option = getopt(argc, argv, "t:m:h")) != -1) {
+	switch(option) {
+	    case 't':
+		//get message as string instead as file
+		strcpy(args->text, optarg);
+		args->use_file = false;
+		break;
+	    case 'm':
+		//choose between iterative and recursive mode
+		args->use_iterative = strcmp(optarg, ITERATIVE) == 0;
+		break;
+	    case 'h':
                 print_help();
                 return 0;
-			case '?':	
-			default:
-                printf("Try 'group_parser -h' for more information.\n");
-				return -1;
-		}
+	    case '?':
+	    default:
+		print_help();
+		return -1;
 	}
+    }
+
     return 0;
 }
 

@@ -38,7 +38,7 @@ int depth_index(int depth) {
 	return result;
 }
 
-char morse_to_text(char* morse) {
+char iterative_morse_to_text(char* morse) {
 	int depth   = 0;
 	int index   = 0;
 	int block   = 0;

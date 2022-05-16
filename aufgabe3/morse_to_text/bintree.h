@@ -1,1 +1,1 @@
-char morse_to_text(char *);
+char recursive_morse_to_text(char *);
