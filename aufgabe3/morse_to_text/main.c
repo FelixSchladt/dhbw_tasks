@@ -35,6 +35,7 @@ char* translate_text(FILE* file) {
 			result[result_index] = morse_to_text(letter);
 			result_index++;
 			letter_index = 0;	
+			init_char_array(letter, MAX_LETTER_SIZE);
 		} else {
 			letter[letter_index] = symbol;
 			letter_index++;
