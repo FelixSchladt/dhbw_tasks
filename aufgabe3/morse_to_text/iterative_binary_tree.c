@@ -3,7 +3,7 @@
 #include "iterative_binary_tree.h"
 
 //This file contains a binary tree used to translate morse code to chars.
-//The tree is stored in an array and i go through it iteratively while keeping the waya binary tree works for 
+//The tree is stored in an array and i go through it iteratively while keeping the waya binary tree works for
 //optimal performance.
 
 //I wanted to include numbers as well so i extended the tree accordingly.
@@ -38,7 +38,7 @@ int depth_index(int depth) {
 	return result;
 }
 
-char iterative_morse_to_text(char* morse) {
+char morse_to_text(char* morse) {
 	int depth   = 0;
 	int index   = 0;
 	int block   = 0;
@@ -48,7 +48,7 @@ char iterative_morse_to_text(char* morse) {
 	while(*morse == '.' || *morse == '-') {
 		is_line = *morse == '.' ? 0 : 1;
 		block   = index - ipow(2, depth) + 1;
-		index = depth_index(depth) + block*2 + is_line;  
+		index = depth_index(depth) + block*2 + is_line;
 
 		depth++;
 		morse++;
