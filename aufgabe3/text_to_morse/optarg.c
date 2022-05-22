@@ -11,13 +11,13 @@
 #include "optarg.h"
 
 void print_missing_input_file() {
-        printf("group_parser: missing input file\n");
-        printf("Try 'group_parser -h' for more information.\n");
+        printf("text2morse: missing input file\n");
+        printf("Try 'text2morse -h' for more information.\n");
 }
 
 void print_invalid_file() {
-        printf("group_parser: input file not found\n");
-        printf("Try 'group_parser -h' for more information.\n");
+        printf("text2morse: input file not found\n");
+        printf("Try 'text2morse -h' for more information.\n");
 }
 
 void print_help() {
@@ -67,7 +67,7 @@ int arg_parser(int argc, char **argv, Arguments * args) {
                 exit(0);
 			case '?':	
 			default:
-                printf("Try 'group_parser -h' for more information.\n");
+                printf("Try 'text2morse -h' for more information.\n");
 				exit(-1);
 		}
 	}

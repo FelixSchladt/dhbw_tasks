@@ -23,7 +23,6 @@ void print_invalid_file() {
 void print_help() {
         puts("Usage: morse2text INPUTFILE [OPTION...]\n"\
         "morse2text -- convert text into morse code\n"\
-        "-o    FILE    Provide name of output file\n"\
         "-h            Show this help message");
 }
 
@@ -54,12 +53,6 @@ int arg_parser(int argc, char **argv, Arguments * args) {
 
     while ((option = getopt(argc, argv, "o:O:h:")) != -1) {
 	switch(option) {
-		case 'o':
-            	case 'O':
-   	                args->output_file = fopen(optarg, "w");
-        	        output_to_file = true;
-                	break;
-
 		case 'h':
                 	print_help();
                 	exit(0);
