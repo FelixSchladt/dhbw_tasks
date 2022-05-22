@@ -9,13 +9,13 @@
 #include "optarg.h"
 
 void print_missing_input_file() {
-        printf("group_parser: missing input file\n");
-        printf("Try 'group_parser -h' for more information.\n");
+        printf("m2t: missing input file\n");
+        printf("Try 'm2t -h' for more information.\n");
 }
 
 void print_invalid_file() {
-        printf("group_parser: input file not found\n");
-        printf("Try 'group_parser -h' for more information.\n");
+        printf("m2t: input file not found\n");
+        printf("Try 'm2t -h' for more information.\n");
 }
 
 void print_help() {
@@ -50,28 +50,28 @@ int arg_parser(int argc, char **argv, Arguments * args) {
         exit(-1);
     }
 
-    while ((option = getopt(argc, argv, "o:O:h:q")) != -1) {
-		switch(option) {
-			case 'o':
-            case 'O':
-                args->output_file = fopen(optarg, "w");
-                output_to_file = true;
-                break;
-            case 'q':
-                args->quiet = true;
-                break;
-			case 'h':
-                print_help();
-                exit(0);
-			case '?':	
-			default:
-                printf("Try 'group_parser -h' for more information.\n");
-				exit(-1);
-		}
+    while ((option = getopt(argc, argv, "o:O:h:")) != -1) {
+	switch(option) {
+		case 'o':
+            	case 'O':
+   	                args->output_file = fopen(optarg, "w");
+        	        output_to_file = true;
+                	break;
+
+		case 'h':
+                	print_help();
+                	exit(0);
+		case '?':	
+		default:
+                	printf("Invalid parameter!\nTry 'm2t -h' for more information.\n");
+			exit(-1);
 	}
-    if (!output_to_file) {
-        args->output_file = fopen("/dev/null", "w");
     }
+
+    if (!output_to_file) {
+    	args->output_file = fopen("/dev/null", "w");
+    }
+
     return 0;
 }
 

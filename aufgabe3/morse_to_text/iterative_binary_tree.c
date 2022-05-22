@@ -43,7 +43,7 @@ char morse_to_text(char* morse) {
 	int index   = 0;
 	int block   = 0;
 	int is_line = 0;
-	char result = '-';
+	char result = ' ';
 
 	while(*morse == '.' || *morse == '-') {
 		is_line = *morse == '.' ? 0 : 1;

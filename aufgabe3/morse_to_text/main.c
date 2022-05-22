@@ -17,7 +17,7 @@ void init_char_array(char* array, int size) {
 		array[i] = '\0';
 		array++;
 	}
-} 
+}
 
 char* translate_text(FILE* file) {
 	char* result       = malloc(MAX_MESSAGE_SIZE);
@@ -26,15 +26,16 @@ char* translate_text(FILE* file) {
 
 	init_char_array(result, MAX_MESSAGE_SIZE);
 	init_char_array(letter, MAX_LETTER_SIZE);
-	
-	int result_index = 0;
+
 	int letter_index = 0;
+	int result_index = 0;
 	char symbol;
 	while ((symbol = fgetc(file)) != EOF) {
+		printf("%c", symbol);
 		if (symbol == ' ') {
 			result[result_index] = morse_to_text(letter);
 			result_index++;
-			letter_index = 0;	
+			letter_index = 0;
 			init_char_array(letter, MAX_LETTER_SIZE);
 		} else {
 			letter[letter_index] = symbol;
@@ -42,14 +43,17 @@ char* translate_text(FILE* file) {
 		}
 	}
 
+	result[result_index] = morse_to_text(letter);
+
 	free(letter);
+	printf("\n");
 	return result;
 }
 
 int main( int argc, char** argv ) {
-    arg_parser(argc, argv, &args);
-    char* translation = translate_text(args.file_pointer);
-    printf("TEXT: %s\n", translation);
+	arg_parser(argc, argv, &args);
+	char* translation = translate_text(args.file_pointer);
+	printf("TEXT: %s\n", translation);
 
-    free(translation);
+	free(translation);
 }
