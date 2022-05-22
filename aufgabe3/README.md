@@ -4,33 +4,33 @@
 
 ### Text to Morse
 ```shell
-make text2morse
+make t2m
 ```
 
 ### Morse to Text
 ```shell
-make morse2text
+make m2t
 ```
 
 ## Run
 
 ### Text to Morse
 ```shell
-./text2morse "infile" -o "outfile"
+./t2m "infile" -o "outfile"
 ```
 
 ### Morse to Text
 ```shell
-./morse2text "infile"
+./m2t "infile"
 ```
 
 You can choose between iterative [i] and recursive [r] mode:
 ```shell
-./morse2text "infile" -m i
+./m2t "infile" -m i
 ```
 or
 ```shell
-./morse2text "infile" -m r
+./mt2 "infile" -m r
 ```
 
 There is also the option to input text directly with `-t "input"`.
