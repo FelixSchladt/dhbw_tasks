@@ -1,3 +1,5 @@
+//Copyright 2022 Felix Schladt (https://github.com/FelixSchladt)
+
 #include <stdbool.h>
 #include <stdio.h>
 

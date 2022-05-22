@@ -1,3 +1,5 @@
+// Copyright 2022 Felix Schladt (https://github.com/FelixSchladt)
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
