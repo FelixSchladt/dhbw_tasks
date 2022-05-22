@@ -11,18 +11,18 @@
 #include "optarg.h"
 
 void print_missing_input_file() {
-        printf("m2t: missing input file\n");
-        printf("Try 'm2t -h' for more information.\n");
+        printf("morse2text: missing input file\n");
+        printf("Try 'morse2text -h' for more information.\n");
 }
 
 void print_invalid_file() {
-        printf("m2t: input file not found\n");
-        printf("Try 'm2t -h' for more information.\n");
+        printf("morse2text: input file not found\n");
+        printf("Try 'morse2text -h' for more information.\n");
 }
 
 void print_help() {
-        puts("Usage: text_to_morse INPUTFILE [OPTION...]\n"\
-        "text_to_morse -- convert text into morse code\n"\
+        puts("Usage: morse2text INPUTFILE [OPTION...]\n"\
+        "morse2text -- convert text into morse code\n"\
         "-o    FILE    Provide name of output file\n"\
         "-h            Show this help message");
 }
@@ -65,7 +65,7 @@ int arg_parser(int argc, char **argv, Arguments * args) {
                 	exit(0);
 		case '?':	
 		default:
-                	printf("Invalid parameter!\nTry 'm2t -h' for more information.\n");
+                	printf("Invalid parameter!\nTry 'morse2text -h' for more information.\n");
 			exit(-1);
 	}
     }
