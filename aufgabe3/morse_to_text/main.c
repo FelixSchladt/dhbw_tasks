@@ -42,7 +42,9 @@ char* translate_text(FILE* file) {
 			letter_index++;
 		}
 	}
-
+    printf("letter %c morse_to_text %c",letter,  morse_to_text(letter));
+    
+    //TODO BUG????
 	result[result_index] = morse_to_text(letter);
 
 	free(letter);
